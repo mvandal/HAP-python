@@ -34,6 +34,7 @@ import time
 import threading
 import json
 import queue
+import platform
 
 from zeroconf import ServiceInfo, Zeroconf
 
@@ -90,7 +91,8 @@ class AccessoryMDNSServiceInfo(ServiceInfo):
             '_hap._tcp.local.',
             self.accessory.display_name + '._hap._tcp.local.',
             socket.inet_aton(self.state.address), self.state.port,
-            0, 0, adv_data)
+            0, 0, adv_data,
+            platform.node() + '.local.')
 
     def _setup_hash(self):
         setup_hash_material = self.state.setup_id + self.state.mac
